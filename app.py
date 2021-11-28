@@ -1,34 +1,18 @@
 from flask import Flask, request, render_template, redirect, url_for 
 import pymysql
-
-_HOSTNAME = 'colbert-mysql.mysql.database.azure.com'
-_USERNAME = 'mikec@colbert-mysql'
-_PASSWORD = 'eoO(i1J]ZkqC%f@vVGU?rH)'
-_DBNAME = 'movie_data'
-_SECRET_KEY = 'ABC123'
-
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(_USERNAME, _PASSWORD, _HOSTNAME,  _DBNAME)
+import os
 
 
 conn = pymysql.connect(
-        host = _HOSTNAME,
-        user = _USERNAME, 
-        password = _PASSWORD,
-        db = _DBNAME,
+        host = os.environ.get('DBHOSTNAME'),
+        user = os.environ.get('DBUSERNAME'),
+        password = os.environ.get('DBPASSWORD'),
+        db = os.environ.get('DBNAME'),
         cursorclass = pymysql.cursors.DictCursor)  #ssl={'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
-
-"""        
-conn = pymysql.connect(
-    _HOSTNAME, 
-    _USERNAME,
-    _PASSWORD,
-    _DBNAME,
-    cursorclass=pymysql.cursors.DictCursor)
-"""
 
 
 application = Flask(__name__)
-application.config['SECRET_KEY'] = _SECRET_KEY #os.environ.get('SECRET_KEY')
+application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 @application.route('/', methods=['GET'])
 def index():
