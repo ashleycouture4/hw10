@@ -16,7 +16,7 @@ conn = pymysql.connect(
         user = _USERNAME, 
         password = _PASSWORD,
         db = _DBNAME,
-        ssl={'ca': './BaltimoreCyberTrustRoot.crt.pem'},
+        ssl={'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
         cursorclass = pymysql.cursors.DictCursor)
 
 """        
