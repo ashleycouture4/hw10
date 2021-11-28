@@ -1,3 +1,17 @@
+#added MWC
+# dotenv file
+.env
+
+#environment file
+.ebextensions/environment_variables.config
+
+#virtual environment
+venv/
+###### MWC
+
+#VS Code workspace file
+.VSCode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
