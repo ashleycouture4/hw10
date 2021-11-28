@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for 
 import pymysql
-import os
 
 _HOSTNAME = 'colbert-mysql.mysql.database.azure.com'
 _USERNAME = 'mikec@colbert-mysql'
