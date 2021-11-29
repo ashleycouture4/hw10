@@ -10,14 +10,14 @@ conn = pymysql.connect(
         cursorclass = pymysql.cursors.DictCursor)  #ssl={'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
 
 
-application = Flask(__name__)
-application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-@application.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
-@application.route('/movie/<movie_id>', methods=['GET', 'POST'])
+@app.route('/movie/<movie_id>', methods=['GET', 'POST'])
 def movie_details(movie_id):
     cur = conn.cursor()
     query = "SELECT * FROM movies WHERE movieId = %s"
@@ -25,7 +25,7 @@ def movie_details(movie_id):
     movie = cur.fetchone()
     return render_template('movie-details.html', movie=movie)
 
-@application.route('/movies', methods=['GET'])
+@app.route('/movies', methods=['GET'])
 def movies():
     cur = conn.cursor()
     query = "SELECT * FROM movies"
@@ -33,7 +33,7 @@ def movies():
     movies = cur.fetchall()
     return render_template('movies.html', movies=movies)
 
-@application.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
         form = request.form
@@ -51,5 +51,5 @@ def search():
         return redirect(url_for('index'))
 
 if __name__ == "__main__":
-    application.run(debug=True)
+    app.run(debug=True)
 
