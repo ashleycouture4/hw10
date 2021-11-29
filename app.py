@@ -6,8 +6,8 @@ conn = pymysql.connect(
         host = os.environ.get('DBHOSTNAME'),
         user = os.environ.get('DBUSERNAME'),
         password = os.environ.get('DBPASSWORD'),
-        db = os.environ.get('DBNAME'),
-        cursorclass = pymysql.cursors.DictCursor)  #ssl={'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
+        db = os.environ.get('DBNAME'), #ssl={'ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
+        cursorclass = pymysql.cursors.DictCursor)  
 
 
 app = Flask(__name__)
