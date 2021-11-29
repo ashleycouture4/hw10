@@ -1,13 +1,25 @@
 from flask import Flask, request, render_template, redirect, url_for 
 import pymysql
 import os
+from azure.keyvault.secrets import SecretClient
+from azure.identity import DefaultAzureCredential
 
+AZURE_KEY_VAULT_URL = os.environ["AZURE_KEY_VAULT_URL"]
+#KVUri = f"https://{keyVaultName}.vault.azure.net/"
+
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=AZURE_KEY_VAULT_URL, credential=credential)
+
+_dbhostname = client.get_secret('DBHOSTNAME')
+_dbusername = client.get_secret('DBUSERNAME')
+_dbpassword = client.get_secret('DBPASSWORD')
+_dbname = client.get_secret('DBNAME')
 
 conn = pymysql.connect(
-        host = os.environ.get('DBHOSTNAME'),
-        user = os.environ.get('DBUSERNAME'),
-        password = os.environ.get('DBPASSWORD'),
-        db = os.environ.get('DBNAME'), 
+        host = _dbhostname.value, #os.environ.get('DBHOSTNAME'),
+        user = _dbusername.value, #os.environ.get('DBUSERNAME'),
+        password = _dbpassword.value, #os.environ.get('DBPASSWORD'),
+        db = _dbname.value, #os.environ.get('DBNAME'), 
         ssl={'ca': './BaltimoreCyberTrustRoot.crt.pem'},
         cursorclass = pymysql.cursors.DictCursor)  
 
