@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 import pymysql
 import os
 
+
 conn = pymysql.connect(
         host = os.environ.get('DBHOSTNAME'),
         user = os.environ.get('DBUSERNAME'),
